@@ -23,7 +23,7 @@
 
                     <div class="form-group">
                         <label for="mpp">Minimum Profit Percentage</label>
-                        <input type="number" value="{{ $mpp }}" min="0" step="0.1" id="mpp" name="minimumprofitpercentage" class="form-control">
+                        <input type="number" value="{{ $mpp }}" min="-99" step="0.1" id="mpp" name="minimumprofitpercentage" class="form-control">
                         <small class="text-muted">To incentive production, the plugin applies this % of the item value on top of the price. While creating an order, you can always choose to give a higher profit, but to avoid players ripping off others, they can't go below this value.</small>
                     </div>
 

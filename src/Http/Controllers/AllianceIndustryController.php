@@ -65,7 +65,7 @@ class AllianceIndustryController extends Controller
     {
         $request->validate([
             "items" => "required|string",
-            "profit" => "required|numeric|min:0",
+            "profit" => "required|numeric|min:-99",
             "days" => "required|integer|min:1",
             "location" => "required|integer",
             "addProfitToManualPrices" => "nullable|in:on",
@@ -443,7 +443,7 @@ class AllianceIndustryController extends Controller
     public function saveSettings(Request $request)
     {
         $request->validate([
-            "minimumprofitpercentage" => "required|numeric|min:0",
+            "minimumprofitpercentage" => "required|numeric|min:-99",
             "pingRolesOrderCreation" => "string|nullable",
             "allowPriceBelowAutomatic" => "nullable|in:on",
             "defaultLocation" => "required|integer",
