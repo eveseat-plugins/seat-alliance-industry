@@ -122,6 +122,10 @@ class AllianceIndustryController extends Controller
             $addToSeatInventory = false;
         }
 
+        if($addToSeatInventory){
+            Gate::authorize("inventory.edit_inventory");
+        }
+
         foreach ($parser_result->items as $item) {
             if($item->manualPrice) {
                 $item->price = $item->manualPrice * $item->amount;

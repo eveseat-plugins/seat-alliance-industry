@@ -82,6 +82,7 @@
                 </div>
 
                 @if(\RecursiveTree\Seat\TreeLib\Helpers\SeatInventoryPluginHelper::pluginIsAvailable())
+                    @can("inventory.edit_inventory")
                     <div class="form-group">
                         <label for="addToSeatInventory">Seat-Inventory</label>
                         <div class="form-check">
@@ -99,6 +100,7 @@
                             You can rename workspaces <a href="{{ route("inventory.settings") }}">here.</a>
                         </small>
                     </div>
+                    @endcan
                 @endif
 
                 @can("allianceindustry.create_repeating_orders")
