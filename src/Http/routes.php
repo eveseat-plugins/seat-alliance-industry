@@ -71,6 +71,12 @@ Route::group([
         'middleware' => 'can:allianceindustry.create_orders'
     ]);
 
+    Route::get('/orders/create/from/fitting', [
+        'as'   => 'allianceindustry.createOrderFromFitting',
+        'uses' => 'AllianceIndustryController@createOrderFromFitting',
+        'middleware' => 'can:allianceindustry.create_orders'
+    ]);
+
     Route::post('/orders/update', [
         'as'   => 'allianceindustry.updateOrderPrice',
         'uses' => 'AllianceIndustryController@updateOrderPrice',

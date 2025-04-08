@@ -9,9 +9,9 @@ use Seat\Eveapi\Models\Universe\UniverseStructure;
 class AllianceIndustryApi
 {
     public static function create_orders($data){
-        $location_id = $data["location"] ?? 60003760;
+        $location_id = $data["location"] ?? AllianceIndustrySettings::$DEFAULT_ORDER_LOCATION->get(60003760);;
 
-        $multibuy = $data["items"]->toMultibuy();
+        $multibuy = $data["asEveText"] ?? $data["items"]->toMultibuy();
 
         $stations = UniverseStation::all();
         $structures = UniverseStructure::all();

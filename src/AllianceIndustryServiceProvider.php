@@ -57,6 +57,8 @@ class AllianceIndustryServiceProvider extends AbstractSeatPlugin
         $this->mergeConfigFrom(__DIR__ . '/Config/priceproviders.backends.php','priceproviders.backends');
 
         $this->mergeConfigFrom(__DIR__ . '/Config/allianceindustry.sde.tables.php','seat.sde.tables');
+        $this->mergeConfigFrom(__DIR__ . '/Config/fitting.exportlinks.php','fitting.exportlinks');
+
 
         Artisan::command('allianceindustry:orders:repeating {--sync}', function () {
             if($this->option("sync")){

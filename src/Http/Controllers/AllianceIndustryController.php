@@ -3,6 +3,7 @@
 namespace RecursiveTree\Seat\AllianceIndustry\Http\Controllers;
 
 use RecursiveTree\Seat\AllianceIndustry\AllianceIndustrySettings;
+use RecursiveTree\Seat\AllianceIndustry\Api\AllianceIndustryApi;
 use RecursiveTree\Seat\AllianceIndustry\Item\PriceableEveItem;
 use RecursiveTree\Seat\AllianceIndustry\Jobs\SendOrderNotifications;
 use RecursiveTree\Seat\AllianceIndustry\Jobs\UpdateRepeatingOrders;
@@ -12,6 +13,7 @@ use RecursiveTree\Seat\AllianceIndustry\Models\OrderItem;
 use RecursiveTree\Seat\PricesCore\Exceptions\PriceProviderException;
 use RecursiveTree\Seat\PricesCore\Facades\PriceProviderSystem;
 use RecursiveTree\Seat\PricesCore\Models\PriceProviderInstance;
+use RecursiveTree\Seat\TreeLib\Helpers\FittingPluginHelper;
 use RecursiveTree\Seat\TreeLib\Helpers\SeatInventoryPluginHelper;
 use RecursiveTree\Seat\TreeLib\Parser\Parser;
 use Seat\Eveapi\Models\Universe\UniverseStation;
@@ -43,22 +45,26 @@ class AllianceIndustryController extends Controller
 
     public function createOrder()
     {
-        //ALSO UPDATE API
-        $stations = UniverseStation::all();
-        //ALSO UPDATE API
-        $structures = UniverseStructure::all();
+        return AllianceIndustryApi::create_orders(["asEveText"=>""]);
+    }
 
-        //ALSO UPDATE API
-        $mpp = AllianceIndustrySettings::$MINIMUM_PROFIT_PERCENTAGE->get(2.5);
-        //ALSO UPDATE API
-        $location_id = AllianceIndustrySettings::$DEFAULT_ORDER_LOCATION->get(60003760);//jita
-        //ALSO UPDATE API
-        $default_price_provider = AllianceIndustrySettings::$DEFAULT_PRICE_PROVIDER->get();
-        //ALSO UPDATE API
-        $allowPriceProviderSelection = AllianceIndustrySettings::$ALLOW_PRICE_PROVIDER_SELECTION->get(false);
+    public function createOrderFromFitting(Request $request)
+    {
+        $request->validate(["id"=>"required|integer"]);
+        $fitting_id = $request->id;
 
-        //ALSO UPDATE API
-        return view("allianceindustry::createOrder", compact("allowPriceProviderSelection","stations", "structures", "mpp", "location_id", "default_price_provider"));
+        if(!FittingPluginHelper::pluginIsAvailable()) {
+            return redirect()->back()->with("error","seat-fitting is not installed");
+        }
+
+        $fitting = FittingPluginHelper::$FITTING_PLUGIN_FITTING_MODEL::find($fitting_id);
+        if($fitting == null) {
+            return redirect()->back()->with("error","fitting not found!");
+        }
+
+        return AllianceIndustryApi::create_orders([
+            "asEveText"=>$fitting->toEve()
+        ]);
     }
 
     public function submitOrder(Request $request)
