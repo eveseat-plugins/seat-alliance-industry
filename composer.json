@@ -26,6 +26,9 @@
     "recursivetree/seat-treelib": "^2.1",
     "recursivetree/seat-prices-core": "^1.0"
   },
+  "suggest": {
+    "cryptatech/seat-fitting": "^5.0.9"
+  },
   "extra": {
     "laravel": {
       "providers": [
