@@ -25,6 +25,13 @@ class OrderNotificationDiscord extends AbstractDiscordNotification implements Sh
     }
 
 
+    private function eve_number_metric(int $number): string
+    {
+        $str = number_metric($number);
+        return str_replace("G","B", $str);
+    }
+
+
     protected function populateMessage(DiscordMessage $message, $notifiable)
     {
         $message->content(sprintf("New seat-alliance-industry orders are available! %s",route("allianceindustry.orders")));
@@ -40,8 +47,8 @@ class OrderNotificationDiscord extends AbstractDiscordNotification implements Sh
             foreach ($displayed as $order){
                 $item_text = OrderItem::formatOrderItemsList($order, true);
                 $location = $order->location()->name;
-                $price = number_metric($order->price);
-                $totalPrice = number_metric($order->price * $order->quantity);
+                $price = $this->eve_number_metric($order->price);
+                $totalPrice = $this->eve_number_metric($order->price * $order->quantity);
                 $priority = PrioritySystem::getPriorityData()[$order->priority]["name"] ?? trans("seat.web.unknown");
 
                 $embed->field(function (DiscordEmbedField $field) use ($totalPrice, $price, $priority, $item_text, $location) {
