@@ -38,7 +38,7 @@ class OrderNotificationDiscord extends AbstractDiscordNotification implements Sh
 
         $message->embed(function (DiscordEmbed $embed) use ($showMoreLink, $displayed) {
             foreach ($displayed as $order){
-                $item_text = OrderItem::formatOrderItemsList($order);
+                $item_text = OrderItem::formatOrderItemsList($order, true);
                 $location = $order->location()->name;
                 $price = number_metric($order->price);
                 $totalPrice = number_metric($order->price * $order->quantity);

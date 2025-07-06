@@ -40,7 +40,7 @@ class OrderNotificationSlack extends AbstractSlackNotification implements Should
                 $attachment
                     ->title("New SeAT Alliance Industry Orders:",  route("allianceindustry.orders"));
                 foreach ($orders as $order){
-                    $item_text = OrderItem::formatOrderItemsList($order);
+                    $item_text = OrderItem::formatOrderItemsList($order, true);
                     $location = $order->location()->name;
                     $price = number_metric($order->price);
                     $totalPrice = number_metric($order->price * $order->quantity);

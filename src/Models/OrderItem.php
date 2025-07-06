@@ -29,14 +29,19 @@ class OrderItem extends Model implements ToEveItem, HasTypeID
         return $item;
     }
 
-    public static function formatOrderItemsList($order){
+    public static function formatOrderItemsList($order, $include_order_quantity=false){
+        $factor = 1;
+        if($include_order_quantity) {
+            $factor = $order->quantity;
+        }
         $items = $order->items;
         if($items->count()>1) {
             $item_text = $items
                 ->take(3)
-                ->map(function ($item) {
+                ->map(function ($item) use ($factor) {
                     $name = $item->type->typeName;
-                    return "$item->quantity $name";
+                    $quantity = $item->quantity * $factor;
+                    return "$quantity $name";
                 })->implode(", ");
             $count = $items->count();
             if ($count > 3) {
@@ -47,7 +52,8 @@ class OrderItem extends Model implements ToEveItem, HasTypeID
         } else if($items->count()==1) {
             $item = $items->first();
             $name = $item->type->typeName;
-            return "$item->quantity $name";
+            $quantity = $item->quantity * $factor;
+            return "$quantity $name";
         } else {
             return "invalid order";
         }
