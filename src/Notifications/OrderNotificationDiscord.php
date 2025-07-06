@@ -27,7 +27,7 @@ class OrderNotificationDiscord extends AbstractDiscordNotification implements Sh
 
     protected function populateMessage(DiscordMessage $message, $notifiable)
     {
-        $message->content("New seat-alliance-industry orders are available!");
+        $message->content(sprintf("New seat-alliance-industry orders are available! %s",route("allianceindustry.orders")));
 
         $displayed = $this->orders;
         $showMoreLink = false;
