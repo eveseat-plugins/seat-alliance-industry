@@ -38,9 +38,14 @@ class AllianceIndustryController extends Controller
                 return $order->assignedQuantity() < $order->quantity;
             });
 
-        $personalOrders = Order::where("user_id", auth()->user()->id)->get();
+        $personalOrders = Order::with("deliveries")->where("user_id", auth()->user()->id)->get();
 
-        return view("allianceindustry::orders", compact("orders", "personalOrders"));
+        $allOrders = collect();
+        if(Gate::allows("allianceindustry.view_all_orders")){
+            $allOrders = Order::with("deliveries")->where("is_repeating",false)->get();
+        }
+
+        return view("allianceindustry::orders", compact("orders", "personalOrders", "allOrders"));
     }
 
     public function createOrder()

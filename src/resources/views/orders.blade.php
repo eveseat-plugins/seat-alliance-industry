@@ -36,6 +36,19 @@
             </div>
         </div>
     </div>
+
+    @can("allianceindustry.view_all_orders")
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-header d-flex flex-row align-items-baseline">
+                    All Orders
+                </h5>
+                <div class="card-text pt-3">
+                    @include("allianceindustry::partials.orderTable",["orders"=>$allOrders])
+                </div>
+            </div>
+        </div>
+    @endcan
 @stop
 
 @push("javascript")

@@ -16,7 +16,7 @@ return [
                 'name'  => 'Deliveries',
                 'icon'  => 'fas fa-user',
                 'route' => 'allianceindustry.deliveries',
-                'permission' => 'allianceindustry.view_orders',
+                'permission' => 'allianceindustry.create_deliveries',
             ],
             [
                 'name'  => 'Settings',

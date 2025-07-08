@@ -5,6 +5,10 @@ return [
         'label' => 'View Orders',
         'description' => 'Allows you to view orders',
     ],
+    'view_all_orders' => [
+        'label' => 'View all orders',
+        'description' => 'Displays all orders, including completed and in-progress orders.',
+    ],
     'create_deliveries' => [
         'label' => 'Complete Orders',
         'description' => 'Allows you to sign up to complete orders',
