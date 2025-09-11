@@ -84,7 +84,8 @@ class AllianceIndustryController extends Controller
             "splitOrders" => "nullable|in:on",
             "priority" => "required|integer",
             "priceprovider"=>"nullable|integer",
-            "repetition"=>"nullable|integer"
+            "repetition"=>"nullable|integer",
+            "pingDiscord" => "nullable|in:on",
         ]);
 
         if (AllianceIndustrySettings::$ALLOW_PRICE_PROVIDER_SELECTION->get(false)){
@@ -170,6 +171,7 @@ class AllianceIndustryController extends Controller
             $order->profit = floatval($request->profit);
             $order->priority = $request->priority;
             $order->priceProvider = $priceProvider;
+            $order->suppressPing = !$request->pingDiscord == "on";
 
             $repetition = intval($request->repetition);
             if($repetition > 0){
@@ -202,6 +204,7 @@ class AllianceIndustryController extends Controller
                 $order->profit = floatval($request->profit);
                 $order->priority = $request->priority;
                 $order->priceProvider = $priceProvider;
+                $order->suppressPing = !$request->pingDiscord == "on";
 
                 //this is duplicated
                 $repetition = intval($request->repetition);

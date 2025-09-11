@@ -103,6 +103,15 @@
                     @endcan
                 @endif
 
+                <div class="form-group">
+                    <label for="addToSeatInventory">Notifications</label>
+                    <div class="form-check">
+                        <input type="checkbox" id="pingDiscord" class="form-check-input" checked
+                               name="pingDiscord">
+                        <label for="pingDiscord" class="form-check-label">Allow pings when sending discord notifications.</label>
+                    </div>
+                </div>
+
                 @can("allianceindustry.create_repeating_orders")
                     <div class="form-group">
                         <label for="repetition">Repetition</label>

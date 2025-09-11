@@ -67,4 +67,11 @@ class OrderNotificationDiscord extends AbstractDiscordNotification implements Sh
             }
         });
     }
+
+    protected function suppressMentions(): bool
+    {
+        return $this->orders->some(function($item){
+            return $item->suppressPing;
+        });
+    }
 }
