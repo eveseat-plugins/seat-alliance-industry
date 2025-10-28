@@ -5,6 +5,7 @@
         <th>Order</th>
         <th>Quantity</th>
         <th>Completed</th>
+        <th>Price over Jita</th>
         <th>Price</th>
         <th>Total Price</th>
         <th>Location</th>
@@ -33,6 +34,9 @@
                 @if($order->completed_at)
                     @include("allianceindustry::partials.time",["date"=>$order->completed_at])
                 @endif
+            </td>
+            <td data-sort="{{(float)$order->price / $order->getMarketPrice()}}" data-filter="_">
+                {{ number((float)$order->price / $order->getMarketPrice() * 100 - 100) }} %
             </td>
             <td data-sort="{{$order->price}}" data-filter="_">
                 {{ number($order->price) }} ISK

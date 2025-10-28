@@ -5,6 +5,7 @@ namespace RecursiveTree\Seat\AllianceIndustry\Models;
 use Illuminate\Database\Eloquent\Model;
 use RecursiveTree\Seat\AllianceIndustry\Item\PriceableEveItem;
 use RecursiveTree\Seat\TreeLib\Items\ToEveItem;
+use Seat\Eveapi\Models\Market\Price;
 use Seat\Eveapi\Models\Sde\InvType;
 use Seat\Services\Contracts\HasTypeID;
 
@@ -27,6 +28,11 @@ class OrderItem extends Model implements ToEveItem, HasTypeID
         $item = new PriceableEveItem($this->type);
         $item->amount = $this->quantity;
         return $item;
+    }
+
+    public function price()
+    {
+        return $this->hasOne(Price::class, "type_id", "type_id");
     }
 
     public static function formatOrderItemsList($order, $include_order_quantity=false){

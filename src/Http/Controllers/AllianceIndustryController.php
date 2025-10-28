@@ -29,7 +29,7 @@ class AllianceIndustryController extends Controller
     public function orders()
     {
 
-        $orders = Order::with("deliveries")
+        $orders = Order::with("deliveries","market_price")
             ->where("completed", false)
             ->where("produce_until",">",DB::raw("NOW()"))
             ->where("is_repeating",false)
@@ -38,11 +38,11 @@ class AllianceIndustryController extends Controller
                 return $order->assignedQuantity() < $order->quantity;
             });
 
-        $personalOrders = Order::with("deliveries")->where("user_id", auth()->user()->id)->get();
+        $personalOrders = Order::with("deliveries","market_price")->where("user_id", auth()->user()->id)->get();
 
         $allOrders = collect();
         if(Gate::allows("allianceindustry.view_all_orders")){
-            $allOrders = Order::with("deliveries")->where("is_repeating",false)->get();
+            $allOrders = Order::with("deliveries","market_price")->where("is_repeating",false)->get();
         }
 
         return view("allianceindustry::orders", compact("orders", "personalOrders", "allOrders"));
@@ -299,7 +299,7 @@ class AllianceIndustryController extends Controller
 
     public function orderDetails($id, Request $request)
     {
-        $order = Order::with("deliveries")->find($id);
+        $order = Order::with("deliveries", "market_price")->find($id);
 
         if (!$order) {
             $request->session()->flash("error", "Could not find order");
