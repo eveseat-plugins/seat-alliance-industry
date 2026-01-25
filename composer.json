@@ -1,7 +1,7 @@
 {
   "name": "recursivetree/seat-alliance-industry",
   "description": "Plan industry operations across an alliance",
-  "license": "MIT",
+  "license": "GPL-2.0-only",
   "type": "seat-plugin",
   "authors": [
     {
